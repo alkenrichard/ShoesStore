@@ -15,6 +15,7 @@ export default function Navigation() {
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
+        tabBarStyle: { backgroundColor: "white" },
       }}
     >
       <Tab.Screen
@@ -23,7 +24,7 @@ export default function Navigation() {
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              name="home-outline"
+              name={focused ? "home" : "home-outline"}
               color={focused ? "#ffad30" : "#d7dade"}
               size={20}
             />
@@ -36,7 +37,7 @@ export default function Navigation() {
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              name="search-outline"
+              name={focused ? "search" : "search-outline"}
               color={focused ? "#ffad30" : "#d7dade"}
               size={20}
             />
@@ -49,7 +50,7 @@ export default function Navigation() {
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              name="heart-outline"
+              name={focused ? "heart" : "heart-outline"}
               color={focused ? "#ffad30" : "#d7dade"}
               size={20}
             />
@@ -62,7 +63,7 @@ export default function Navigation() {
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              name="person-outline"
+              name={focused ? "person" : "person-outline"}
               color={focused ? "#ffad30" : "#d7dade"}
               size={20}
             />
