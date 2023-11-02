@@ -26,7 +26,7 @@ export default function Navigation() {
             <Ionicons
               name={focused ? "home" : "home-outline"}
               color={focused ? "#ffad30" : "#d7dade"}
-              size={20}
+              size={30}
             />
           ),
         }}
@@ -39,7 +39,7 @@ export default function Navigation() {
             <Ionicons
               name={focused ? "search" : "search-outline"}
               color={focused ? "#ffad30" : "#d7dade"}
-              size={20}
+              size={30}
             />
           ),
         }}
@@ -52,7 +52,7 @@ export default function Navigation() {
             <Ionicons
               name={focused ? "heart" : "heart-outline"}
               color={focused ? "#ffad30" : "#d7dade"}
-              size={20}
+              size={30}
             />
           ),
         }}
@@ -65,7 +65,7 @@ export default function Navigation() {
             <Ionicons
               name={focused ? "person" : "person-outline"}
               color={focused ? "#ffad30" : "#d7dade"}
-              size={20}
+              size={30}
             />
           ),
         }}
