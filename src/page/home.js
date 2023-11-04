@@ -14,26 +14,32 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 export default function Home() {
   const brand = [
     {
+      id: 1,
       logo: require("../asset/brand/nike.png"),
       brand: "Nike",
     },
     {
+      id: 2,
       logo: require("../asset/brand/converse.png"),
       brand: "Converse",
     },
     {
+      id: 3,
       logo: require("../asset/brand/newBelance.png"),
       brand: "New Balance",
     },
     {
+      id: 4,
       logo: require("../asset/brand/puma.png"),
       brand: "Puma",
     },
     {
+      id: 5,
       logo: require("../asset/brand/reebok.png"),
       brand: "Reebok",
     },
     {
+      id: 6,
       logo: require("../asset/brand/vans.png"),
       brand: "Vans",
     },
@@ -41,6 +47,7 @@ export default function Home() {
 
   const popularProduct = [
     {
+      id: 1,
       rating: 4.5,
       name: "Nike Structure 25",
       price: 132,
@@ -49,6 +56,7 @@ export default function Home() {
       background: "#ffd28c",
     },
     {
+      id: 2,
       rating: 4.6,
       name: "LeBron XX Premium EP",
       price: 206,
@@ -56,9 +64,66 @@ export default function Home() {
       image: require("../asset/shoes/1.png"),
       background: "#9c4c9c",
     },
+    {
+      id: 3,
+      rating: 4.4,
+      name: "LeBron Witness 8 EP",
+      price: 99,
+      color: ["#3d485d", "#457c72", "#d8dade"],
+      image: require("../asset/shoes/2.png"),
+      background: "#d94719",
+    },
+    {
+      id: 4,
+      rating: 4.5,
+      name: "Nike Metcon 9 PRM",
+      price: 152,
+      color: ["#000000"],
+      image: require("../asset/shoes/3.png"),
+      background: "#f1cf81",
+    },
+  ];
+
+  const newArrivals = [
+    {
+      id: 1,
+      image: require("../asset/shoes/4.png"),
+      backgroundColor: "#83a843",
+      rating: 4.5,
+      name: "Nike In-Season TR 13",
+      price: 73,
+    },
+    {
+      id: 2,
+      image: require("../asset/shoes/5.png"),
+      backgroundColor: "#b48970",
+      rating: 4.6,
+      name: "Nike In-Season TR 13 PRM",
+      price: 76,
+    },
+    {
+      id: 3,
+      image: require("../asset/shoes/6.png"),
+      backgroundColor: "#b49587",
+      rating: 4.5,
+      name: "Nike Legend Essential 3 NN",
+      price: 68,
+    },
+    {
+      id: 4,
+      image: require("../asset/shoes/7.png"),
+      backgroundColor: "#3c4964",
+      rating: 4.7,
+      name: "Nike Alphafly 2",
+      price: 261,
+    },
   ];
 
   const [brandSelected, setBrandSelected] = useState(0);
+
+  const handleOnScroll = (e) => {
+    console.log(e.nativeEvent.contentOffset.x);
+  };
 
   const BrandList = ({ index, brand, name }) => {
     return (
@@ -137,47 +202,78 @@ export default function Home() {
     </View>
   );
 
+  const NewArrivals = ({ image, backgroundColor, rating, name, price }) => (
+    <View style={{ width: "45%" }}>
+      <View style={styles.containerCard}>
+        <View
+          style={[styles.backgroundCard, { backgroundColor: backgroundColor }]}
+        />
+        <Image source={image} style={styles.imageArrival} />
+        <View style={styles.containerStar}>
+          <Text style={styles.rating}>
+            {rating} <Ionicons name="star" color={"#ffb036"} size={10} />
+          </Text>
+          <View style={styles.add}>
+            <Ionicons name="add" color={"#000"} size={15} />
+          </View>
+        </View>
+      </View>
+      <View style={styles.containerTitleArrival}>
+        <Text style={styles.titleArrival}>{name}</Text>
+        <Text style={{ fontSize: 18, fontWeight: "800" }}>${price}</Text>
+      </View>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
-      {/* HEADER */}
-      <View style={styles.containerHeader}>
-        <View style={styles.hamburgerMenu}>
-          <View style={[styles.hamburger, { width: "50%" }]} />
-          <View style={[styles.hamburger, { width: "100%" }]} />
-          <View style={[styles.hamburger, { width: "70%" }]} />
+      <StatusBar barStyle={"dark-content"} backgroundColor={"white"} />
+      <ScrollView contentContainerStyle={{ paddingBottom: 50 }}>
+        {/* HEADER */}
+        <View style={styles.containerHeader}>
+          <View style={styles.hamburgerMenu}>
+            <View style={[styles.hamburger, { width: "50%" }]} />
+            <View style={[styles.hamburger, { width: "100%" }]} />
+            <View style={[styles.hamburger, { width: "70%" }]} />
+          </View>
+          <View style={styles.containercart}>
+            <Ionicons name="basket-outline" color={"black"} size={25} />
+          </View>
         </View>
-        <View style={styles.containercart}>
-          <Ionicons name="basket-outline" color={"black"} size={25} />
+
+        {/* SEARCH BAR */}
+        <View style={styles.containerSearch}>
+          <TextInput style={styles.search} placeholder="Search" />
+          <Ionicons
+            name="search-outline"
+            color={"black"}
+            size={20}
+            style={styles.iconSearch}
+          />
         </View>
-      </View>
 
-      {/* SEARCH BAR */}
-      <View style={styles.containerSearch}>
-        <TextInput style={styles.search} placeholder="Search" />
-        <Ionicons
-          name="search-outline"
-          color={"black"}
-          size={20}
-          style={styles.iconSearch}
-        />
-      </View>
+        {/* BRAND NAME */}
+        <View style={styles.containerBrand}>
+          <ScrollView
+            horizontal
+            contentContainerStyle={{
+              columnGap: 13,
+              left: 20,
+              paddingRight: 40,
+            }}
+          >
+            {brand.map((item, index) => (
+              <BrandList
+                key={item.id}
+                index={index}
+                brand={item.logo}
+                name={item.brand}
+              />
+            ))}
+          </ScrollView>
+        </View>
 
-      {/* BRAND NAME */}
-      <View style={styles.containerBrand}>
-        <ScrollView horizontal contentContainerStyle={{ columnGap: 13 }}>
-          {brand.map((item, index) => (
-            <BrandList
-              key={index}
-              index={index}
-              brand={item.logo}
-              name={item.brand}
-            />
-          ))}
-        </ScrollView>
-      </View>
-
-      {/* POPULAR */}
-      <View style={styles.containerPopular}>
+        {/* POPULAR */}
         <View style={styles.popularHeader}>
           <Text style={styles.popularText}>Popular</Text>
           <Text style={styles.seeAll}>See all</Text>
@@ -186,11 +282,15 @@ export default function Home() {
         <View style={styles.containerListPopular}>
           <ScrollView
             horizontal
-            contentContainerStyle={{ columnGap: 13, width: "100%" }}
+            contentContainerStyle={{
+              columnGap: 15,
+              left: 20,
+              paddingRight: 40,
+            }}
           >
-            {popularProduct.map((item, index) => (
+            {popularProduct.map((item) => (
               <PopularProduct
-                key={index}
+                key={item.id}
                 rating={item.rating}
                 name={item.name}
                 price={item.price}
@@ -201,7 +301,26 @@ export default function Home() {
             ))}
           </ScrollView>
         </View>
-      </View>
+
+        {/* NEW ARRIVALS */}
+        <View style={styles.popularHeader}>
+          <Text style={styles.popularText}>New Arrivals</Text>
+          <Text style={styles.seeAll}>See all</Text>
+        </View>
+
+        <View style={styles.containerArrival}>
+          {newArrivals.map((item) => (
+            <NewArrivals
+              key={item.id}
+              image={item.image}
+              backgroundColor={item.backgroundColor}
+              rating={item.rating}
+              name={item.name}
+              price={item.price}
+            />
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -210,11 +329,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    paddingHorizontal: 20,
   },
 
   containerHeader: {
-    marginTop: StatusBar.currentHeight + 10,
+    paddingHorizontal: 20,
     width: "100%",
     height: "5%",
     justifyContent: "space-between",
@@ -224,7 +342,7 @@ const styles = StyleSheet.create({
 
   hamburgerMenu: {
     justifyContent: "space-between",
-    height: "50%",
+    height: "35%",
     width: "8%",
   },
 
@@ -241,9 +359,10 @@ const styles = StyleSheet.create({
   },
 
   containerSearch: {
+    paddingHorizontal: 20,
     width: "100%",
-    height: "5%",
-    marginTop: 40,
+    height: "4%",
+    justifyContent: "center",
   },
 
   search: {
@@ -257,7 +376,7 @@ const styles = StyleSheet.create({
 
   iconSearch: {
     position: "absolute",
-    right: 0,
+    right: 20,
   },
 
   containerBrand: {
@@ -294,6 +413,7 @@ const styles = StyleSheet.create({
   },
 
   popularHeader: {
+    paddingHorizontal: 20,
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-between",
@@ -310,18 +430,18 @@ const styles = StyleSheet.create({
   },
 
   containerPopular: {
-    width: "100%",
+    flex: 1,
   },
 
   containerListPopular: {
     width: "100%",
+    marginVertical: 10,
     height: 160,
-    marginTop: 10,
   },
 
   popularProduct: {
     height: "100%",
-    width: "85%",
+    width: 280,
     backgroundColor: "#00000009",
     borderRadius: 15,
     padding: 10,
@@ -407,5 +527,59 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     right: 0,
     borderRadius: 100,
+  },
+
+  containerArrival: {
+    paddingHorizontal: 20,
+    marginTop: 10,
+    width: "100%",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    rowGap: 30,
+  },
+
+  containerCard: {
+    backgroundColor: "#00000009",
+    height: 160,
+    borderRadius: 15,
+    width: "100%",
+    overflow: "hidden",
+  },
+
+  backgroundCard: {
+    width: "100%",
+    aspectRatio: 1,
+    borderRadius: 100,
+    position: "absolute",
+    top: "-40%",
+    right: "-40%",
+  },
+
+  imageArrival: {
+    width: "90%",
+    height: "50%",
+    resizeMode: "contain",
+    transform: [{ rotate: "-20deg" }],
+    marginTop: 20,
+  },
+
+  containerStar: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 10,
+    marginTop: 25,
+  },
+
+  containerTitleArrival: {
+    alignItems: "center",
+    width: "100%",
+    marginTop: 10,
+  },
+
+  titleArrival: {
+    width: "70%",
+    fontWeight: "600",
+    textAlign: "center",
   },
 });
