@@ -228,7 +228,10 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <StatusBar barStyle={"dark-content"} backgroundColor={"white"} />
-      <ScrollView contentContainerStyle={{ paddingBottom: 50 }}>
+      <ScrollView
+        contentContainerStyle={{ paddingBottom: 50 }}
+        showsVerticalScrollIndicator={false}
+      >
         {/* HEADER */}
         <View style={styles.containerHeader}>
           <View style={styles.hamburgerMenu}>
@@ -575,6 +578,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     marginTop: 10,
+    height: 60,
+    justifyContent: "space-between",
   },
 
   titleArrival: {
