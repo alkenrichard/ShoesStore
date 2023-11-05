@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableWithoutFeedback,
   Animated,
+  ScrollView,
 } from "react-native";
 import React, { useState, useRef, useEffect } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -50,8 +51,33 @@ export default function Detail() {
     },
   ];
 
+  const gallery = [
+    {
+      id: 1,
+      image: require("../asset/shoe1/2.png"),
+    },
+    {
+      id: 2,
+      image: require("../asset/shoe1/3.png"),
+    },
+    {
+      id: 3,
+      image: require("../asset/shoe1/4.png"),
+    },
+    {
+      id: 4,
+      image: require("../asset/shoe1/5.png"),
+    },
+    {
+      id: 6,
+      image: require("../asset/shoe1/7.png"),
+    },
+  ];
+
   const [open, setOpen] = useState({ size: false, color: false });
   const [selected, setSelected] = useState({ size: 0, color: 0 });
+  const [quantity, setQuantity] = useState(1);
+  const [like, setLike] = useState(false);
 
   const openSizePick = useRef(new Animated.Value(0)).current;
   const openColorPick = useRef(new Animated.Value(0)).current;
@@ -118,7 +144,13 @@ export default function Detail() {
       {/* HEADER */}
       <View style={styles.containerHeader}>
         <Ionicons name="chevron-back" color={"black"} size={25} />
-        <Ionicons name="heart-outline" color={"black"} size={30} />
+        <TouchableWithoutFeedback onPress={() => setLike(!like)}>
+          <Ionicons
+            name={like ? "heart" : "heart-outline"}
+            color={like ? "red" : "black"}
+            size={30}
+          />
+        </TouchableWithoutFeedback>
       </View>
 
       {/* TITLE */}
@@ -248,6 +280,51 @@ export default function Detail() {
           )}
         </View>
       </View>
+
+      {/* GALERY */}
+      <Text style={styles.galleryText}>Gallery</Text>
+
+      <View>
+        <ScrollView
+          horizontal
+          contentContainerStyle={{
+            left: 20,
+            paddingRight: 40,
+            columnGap: 15,
+            height: 100,
+          }}
+        >
+          {gallery.map((item) => (
+            <View key={item.id} style={styles.gallery}>
+              <Image source={item.image} style={styles.galleryImage} />
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+
+      {/* QUANTITY */}
+      <Text style={[styles.galleryText, { marginTop: 40 }]}>Quantity</Text>
+      <View style={styles.containerQuantity}>
+        <View style={styles.containerCount}>
+          <TouchableWithoutFeedback onPress={() => setQuantity(quantity - 1)}>
+            <View style={styles.containerButton}>
+              <Ionicons name="remove" color={"black"} size={25} />
+            </View>
+          </TouchableWithoutFeedback>
+          <Text style={styles.quantity}>{quantity}</Text>
+          <TouchableWithoutFeedback onPress={() => setQuantity(quantity + 1)}>
+            <View style={styles.containerButton}>
+              <Ionicons name="add" color={"black"} size={25} />
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+
+        <View style={styles.containerSubmit}>
+          <Text style={styles.price}>${132 * quantity}</Text>
+          <View style={styles.addition} />
+          <Text style={{ color: "white", fontWeight: "500" }}>Add to Cart</Text>
+        </View>
+      </View>
     </View>
   );
 }
@@ -335,5 +412,79 @@ const styles = StyleSheet.create({
     height: 25,
     width: 25,
     borderRadius: 40,
+  },
+
+  galleryText: {
+    marginBottom: 10,
+    marginLeft: 20,
+    fontSize: 15,
+    fontWeight: "700",
+  },
+
+  gallery: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#00000009",
+  },
+
+  galleryImage: {
+    width: "90%",
+    height: "90%",
+    resizeMode: "contain",
+  },
+
+  containerQuantity: {
+    marginTop: 10,
+    marginHorizontal: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  containerCount: {
+    flexDirection: "row",
+    width: "35%",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  containerButton: {
+    width: 30,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+    borderWidth: 1.5,
+    borderColor: "#00000020",
+  },
+
+  quantity: {
+    fontSize: 18,
+    fontWeight: "800",
+  },
+
+  containerSubmit: {
+    width: "55%",
+    flexDirection: "row",
+    backgroundColor: "#ffb036",
+    height: 50,
+    borderRadius: 100,
+    alignItems: "center",
+    justifyContent: "space-evenly",
+  },
+
+  price: {
+    fontSize: 18,
+    fontWeight: "800",
+    color: "white",
+  },
+
+  addition: {
+    width: "10%",
+    height: 1,
+    backgroundColor: "white",
   },
 });
