@@ -12,7 +12,7 @@ import {
 import React, { useState, useRef, useEffect } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-export default function Detail() {
+export default function Detail({ navigation }) {
   const size = [
     {
       id: 1,
@@ -295,9 +295,18 @@ export default function Detail() {
           }}
         >
           {gallery.map((item) => (
-            <View key={item.id} style={styles.gallery}>
-              <Image source={item.image} style={styles.galleryImage} />
-            </View>
+            <TouchableWithoutFeedback
+              key={item.id}
+              onPress={() => {
+                navigation.navigate("image", {
+                  image: item.image,
+                });
+              }}
+            >
+              <View style={styles.gallery}>
+                <Image source={item.image} style={styles.galleryImage} />
+              </View>
+            </TouchableWithoutFeedback>
           ))}
         </ScrollView>
       </View>
@@ -331,6 +340,7 @@ export default function Detail() {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "white",
     flex: 1,
   },
 

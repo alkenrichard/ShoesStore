@@ -10,8 +10,9 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import Animated from "react-native-reanimated";
 
-export default function Home() {
+export default function Home({ navigation }) {
   const brand = [
     {
       id: 1,
@@ -121,10 +122,6 @@ export default function Home() {
 
   const [brandSelected, setBrandSelected] = useState(0);
 
-  const handleOnScroll = (e) => {
-    console.log(e.nativeEvent.contentOffset.x);
-  };
-
   const BrandList = ({ index, brand, name }) => {
     return (
       <TouchableWithoutFeedback onPress={() => setBrandSelected(index)}>
@@ -168,38 +165,47 @@ export default function Home() {
     color,
     image,
     background,
+    id,
   }) => (
-    <View style={styles.popularProduct}>
-      <View style={styles.containerRating}>
-        <Text style={styles.rating}>
-          {rating} <Ionicons name="star" color={"#ffb036"} size={10} />
-        </Text>
-        <View style={styles.add}>
-          <Ionicons name="add" color={"#000"} size={15} />
-        </View>
-      </View>
-      <View style={styles.containerProduct}>
-        <View style={styles.containerInfoPopular}>
-          <Text style={styles.namePopular}>{name}</Text>
-          <Text style={styles.pricePopular}>${price}</Text>
-          <View style={styles.containerColor}>
-            <Text style={styles.colorTitle}>Color</Text>
-            {color.map((item, index) => (
-              <View
-                style={[styles.colors, { backgroundColor: item }]}
-                key={index}
-              />
-            ))}
+    <TouchableWithoutFeedback
+      onPress={() => id === 1 && navigation.navigate("detail")}
+    >
+      <View style={styles.popularProduct}>
+        <View style={styles.containerRating}>
+          <Text style={styles.rating}>
+            {rating} <Ionicons name="star" color={"#ffb036"} size={10} />
+          </Text>
+          <View style={styles.add}>
+            <Ionicons name="add" color={"#000"} size={15} />
           </View>
         </View>
-        <View style={styles.containerShoe}>
-          <View
-            style={[styles.backgroundShoe, { backgroundColor: background }]}
-          />
-          <Image source={image} style={styles.shoes} />
+        <View style={styles.containerProduct}>
+          <View style={styles.containerInfoPopular}>
+            <Text style={styles.namePopular}>{name}</Text>
+            <Text style={styles.pricePopular}>${price}</Text>
+            <View style={styles.containerColor}>
+              <Text style={styles.colorTitle}>Color</Text>
+              {color.map((item, index) => (
+                <View
+                  style={[styles.colors, { backgroundColor: item }]}
+                  key={index}
+                />
+              ))}
+            </View>
+          </View>
+          <View style={styles.containerShoe}>
+            <View
+              style={[styles.backgroundShoe, { backgroundColor: background }]}
+            />
+            <Animated.Image
+              source={image}
+              style={styles.shoes}
+              sharedTransitionTag="image"
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 
   const NewArrivals = ({ image, backgroundColor, rating, name, price }) => (
@@ -300,6 +306,7 @@ export default function Home() {
                 color={item.color}
                 image={item.image}
                 background={item.background}
+                id={item.id}
               />
             ))}
           </ScrollView>
