@@ -3,12 +3,13 @@ import {
   View,
   Image,
   TouchableWithoutFeedback,
+  ScrollView,
 } from "react-native";
 import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function ImagePage({ route, navigation }) {
-  const { image } = route.params;
+  const { image, idChoosen } = route.params;
   return (
     <View style={styles.container}>
       <View style={styles.containerImage}>
@@ -32,7 +33,8 @@ const styles = StyleSheet.create({
   },
 
   containerImage: {
-    width: "80%",
+    width: 300,
+    height: 300,
     aspectRatio: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -54,5 +56,13 @@ const styles = StyleSheet.create({
     top: -20,
     borderRadius: 100,
     padding: 5,
+  },
+
+  containerImages: {
+    columnGap: 50,
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

@@ -300,6 +300,7 @@ export default function Detail({ navigation }) {
               onPress={() => {
                 navigation.navigate("image", {
                   image: item.image,
+                  idChoosen: item.id,
                 });
               }}
             >
